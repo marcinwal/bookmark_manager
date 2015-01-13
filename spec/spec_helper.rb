@@ -1,9 +1,9 @@
 ENV['RACK_ENV'] = 'test'
 require './server'
 require 'database_cleaner'
-require 'capybara/rspec'
+require 'capybara/rspec'   #set for capybara
 
-Capybara.app = Sinatra::Application
+Capybara.app = BookmarkManager   #set for capybara
 
 RSpec.configure do |config|
 
@@ -25,7 +25,7 @@ RSpec.configure do |config|
     DatabaseCleaner.start
   end
 
-  config.after(:each) do
+  config.after(:each) do  #cleaning db after cleaning
     DatabaseCleaner.clean
   end
 
