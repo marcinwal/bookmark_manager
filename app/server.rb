@@ -6,7 +6,7 @@ require './lib/tag'
 require './lib/link'
 require 'rack-flash'
 require_relative 'helpers/application'
-require_relative 'data_mapper_setup'
+require_relative 'data_mapper_setup'      #loading DB helper 
 
 
 env = ENV["RACK_ENV"] || 'development'
@@ -83,6 +83,22 @@ post '/users' do
     flash.now[:errors] = @user.errors.full_messages
     erb :"users/new"
   end  
+end
+
+get '/sessions/new' do 
+  erb :"sessions/new"
+end
+
+post '/sessions' do 
+  email, password = params[:email], params[:password]
+  user = User.authenticate(email,password)
+  if user
+    session[:user_id] = user.id
+    redirect to('/')
+  else
+    flash[:errors] = ["The email or password is incorrect"]
+    erb :"sessions/new"
+  end
 end
 
 end
