@@ -106,5 +106,7 @@ delete '/sessions' do
   session[:user_id] = nil
   #erb :good_bye
   flash[:notice] = "Good bye!"
+  # sleep 3
+  # erb :index
 end
 end
