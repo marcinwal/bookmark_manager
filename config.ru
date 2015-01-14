@@ -1,3 +1,3 @@
 require './app/server'
 
-run BookmarkManager
+run Sinatra::Application
