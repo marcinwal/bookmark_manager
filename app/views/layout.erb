@@ -2,6 +2,7 @@
 <!--<% if flash[:notice] %>
   <div id="notice"><%= flash[:notice] %></div>
 <% end %>==>-->
+<a href="/user/new">Sign in</a>
 <% if flash[:errors] && !flash[:errors].empty? %>
   Sorry, there were the following problems with the form.
   <ul id="errors">
@@ -12,6 +13,16 @@
 <% end %>
   <% if current_user %>
     Welcome, <%= current_user.email %>
+    <form method="post" action="/sessions">
+      <input type="hidden" name="_method" value="delete"> <!-- method hidden delete !!!! -->
+      <input type="submit" value="Sign out">
+    </form>  
+  <% end %>
+
+  <%if flash[:notice] %>
+  <div id="notice">
+    <%= flash[:notice] %>
+  </div>
   <% end %>
   <%= yield %>  
 </body>

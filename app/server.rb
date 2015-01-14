@@ -34,6 +34,7 @@ class BookmarkManager < Sinatra::Base
 enable :sessions
 set :sessions_secret, 'super secret' 
 use Rack::Flash  #using flash
+use Rack::MethodOverride
 
   
 include ApplicationHelper
@@ -101,4 +102,8 @@ post '/sessions' do
   end
 end
 
+delete '/sessions' do
+  session[:user_id] = nil
+  erb :good_bye
+end
 end

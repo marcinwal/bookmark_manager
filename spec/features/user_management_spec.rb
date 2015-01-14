@@ -82,7 +82,7 @@ feature 'User signs out ' do
 
   scenario 'while being signed in' do 
     sign_in('test@test.com','test')
-    click_button "Signed out"
+    click_button "Sign out"
     expect(page).to have_content("Good bye!")
     expect(page).not_to have_content("Welocme, test@test.com")
   end
