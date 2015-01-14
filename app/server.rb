@@ -1,25 +1,28 @@
+require 'sinatra'
 require 'sinatra/base'
 require 'data_mapper'
 require './lib/user'
 require './lib/tag'
 require './lib/link'
+require_relative 'helpers/application'
+require_relative 'data_mapper_setup'
+
 
 env = ENV["RACK_ENV"] || 'development'
 
 #defining which database datamapper should use
 
-DataMapper.setup(:default, "postgres://localhost/bookmark_manager_#{env}")
+#DataMapper.setup(:default, "postgres://localhost/bookmark_manager_#{env}")
 
 #require_relative ‘./models/link'
 
 
 #after declaring models you should finalize them
 
-DataMapper.finalize
+#DataMapper.finalize
 
 #database does not exist yet;we need to create it with ..
-DataMapper.auto_upgrade!
-
+#DataMapper.auto_upgrade!
 
 
 
@@ -30,11 +33,14 @@ class BookmarkManager < Sinatra::Base
 enable :sessions
 set :sessions_secret, 'super secret' 
 
-helpers do 
-  def current_user
-    @current_user ||=User.get(session[:user_id]) if session[:user_id]
-  end
-end 
+  
+include ApplicationHelper
+
+# helpers do
+#   def current_user    
+#     @current_user ||= User.get(session[:user_id]) if session[:user_id]
+#   end
+# end  
 
 post '/links' do
   url = params["url"]
