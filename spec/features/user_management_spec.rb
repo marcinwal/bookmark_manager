@@ -89,10 +89,22 @@ feature 'User signs out ' do
 end
 
 feature 'user forgets the password' do 
+
+
   scenario 'user can forget the password' do 
     visit '/users/request'
-    fill_request_form("add@add.com")
+    fill_request_form("test@test.com")
     expect(page).to have_content("Password recovery!")
+  end
+
+  scenario 'after the form input user should get token' do
+    User.create(:email => "test@test.com",
+                :password => 'test',
+                :password_confirmation => 'test') 
+    visit '/users/request'
+    fill_request_form("test@test.com")
+    click_button "request"
+    expect(page).to have_content("Token has been sent to you!")
   end
 
   def fill_request_form(email)
