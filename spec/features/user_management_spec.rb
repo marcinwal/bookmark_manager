@@ -107,6 +107,16 @@ feature 'user forgets the password' do
     expect(page).to have_content("Token has been sent to you!")
   end
 
+  scenario "no token for unregistered user" do
+    User.create(:email => "test@test.com",
+                :password => 'test',
+                :password_confirmation => 'test') 
+    visit '/users/request'
+    fill_request_form("aaa@aaa.aaa")
+    click_button "request"
+    expect(page).to have_content("No such user recorded")
+  end
+
   def fill_request_form(email)
     fill_in :email, :with => email
   end
