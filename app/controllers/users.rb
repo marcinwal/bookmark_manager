@@ -77,3 +77,7 @@ post '/users/password_reset_final' do
   flash[:notce] = "Password reseted!"
   redirect '/'
 end
+
+get '/users/email' do 
+  send_simple_message("marcin.walendzik@gmail.com","marcin.walendzik@gmail.com","Witaj","Pierwszy teks")
+end
