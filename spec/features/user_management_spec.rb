@@ -87,3 +87,15 @@ feature 'User signs out ' do
     expect(page).not_to have_content("Welocme, test@test.com")
   end
 end
+
+feature 'user forgets the password' do 
+  scenario 'user can forget the password' do 
+    visit '/users/request'
+    fill_request_form("add@add.com")
+    expect(page).to have_content("Password recovery!")
+  end
+
+  def fill_request_form(email)
+    fill_in :email, :with => email
+  end
+end  

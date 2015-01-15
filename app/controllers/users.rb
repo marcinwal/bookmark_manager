@@ -16,3 +16,12 @@ post '/users' do
     erb :"users/new"
   end  
 end
+
+
+get '/users/reset_password/:token' do
+
+end
+
+get '/users/request' do 
+  erb :request
+end
