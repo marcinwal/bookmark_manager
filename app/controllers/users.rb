@@ -41,5 +41,39 @@ post '/request' do
   else
     flash[:notice] = "No such user recorded"
   end  
+  #send the email !!!!!!!!
   redirect to('/')
+end
+
+
+get '/users/reset_password/:token' do 
+   user = User.first(:password_token => token)
+   time_issued = user.password_token_timestamp
+   if (Time.now - time_issued >3600) #too late
+      flash[:notice] = "Token expired"
+      user.password_token = nil
+      user.password_token_timestamp = nil
+      redirect to('/')
+   else
+      redirect "/users/reset_password/#{token}", 307 #post
+   end 
+end
+
+
+
+post '/users/reset_password' do 
+  @user = User.first(:token => token)
+  erb :"users/password"
+end
+
+post '/users/password_reset_final' do 
+  password = params[:password]
+  password_confirmation = params[:password_confirmation]
+  @user.password = password
+  @user.password_confirmation = password_confirmation
+  @user.password_token = nil
+  @user.password_token_timestamp = nil
+  @user.save
+  flash[:notce] = "Password reseted!"
+  redirect '/'
 end
